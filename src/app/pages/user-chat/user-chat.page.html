@@ -1,0 +1,123 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: #128C7E;" lines="none" >
+    <div style="display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    grid-template-columns: auto auto auto auto auto auto;
+    color: white;">
+    <ion-icon name="arrow-back-sharp" style="font-size:x-large;" (click)="backpage()"></ion-icon>
+    <ion-avatar style="width:32px;height:32px;margin-left: -1.0rem;">
+      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+
+    <ion-input  id="yup"
+    [(ngModel)]="name"
+    (click)="openList()"
+    style="--background: transparent; font-weight: 600; font-size: large;width: 44%;margin-left:-1rem;"
+  ></ion-input>
+
+
+  <ion-popover trigger="yup">
+    <ng-template>
+      <ion-list *ngIf="isListOpen">
+        <ion-item *ngFor="let item of itemList" (click)="selectItem(item.name)">
+          {{ item.name }}
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
+
+  
+  
+
+
+  <ion-icon name="videocam" style="font-size: 1.5rem;margin-top:0.2rem;" ></ion-icon>
+  <ion-icon name="call" style="font-size: 1.5rem;margin-top:0.2rem;"></ion-icon>
+  <ion-icon id="hover-trigger" name="options" style="font-size: 1.5rem;margin-top:0.2rem;"></ion-icon>
+</div>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true" >
+ 
+     <div #messageContainer *ngFor="let item of textlist"  >
+      <ion-item    *ngIf="item.length>0" style="
+        
+        border: 2px;
+        width:fit-content;
+        clear:both;
+
+        border-radius: 1rem;
+        margin: 1rem;
+        border-top-left-radius: 0rem;
+        font-size: larger;
+        font-family: Nunito-Sans;
+        font-style: normal;
+        background: white;"  >
+         {{item}}
+        
+         <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>        
+      </ion-item>
+
+
+      <ion-item    *ngIf="item.length>0" style="
+       
+        border: 2px;
+        border-radius: 1rem;
+        margin: 1rem;
+        float:right;
+        clear:both;
+        
+        --background:lightcyan;
+        width:fit-content;
+        color:black;
+        border-top-right-radius: 0rem;
+        font-size: larger;
+        font-family: Nunito-Sans;
+        font-style: normal;
+        background: white;"  >
+         {{item}}
+        
+         <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>    
+
+</ion-item>
+
+
+
+  
+
+    </div> 
+
+    
+  
+  
+ 
+</ion-content>
+<ion-footer>
+<ion-row>
+  <ion-card  style="border-radius:2rem;text-align:center;font-size:larger;">
+    
+    <ion-input id="myInput"  placeholder="Message" type="text" style="text-align: center;
+    font-size: medium;" [(ngModel)]="textfromuser" (keyup.enter)="sendtext()">
+
+    </ion-input>
+    
+  
+  
+</ion-card>
+<ion-fab id="myBtn" (click)="sendtext()"  vertical="bottom" horizontal="end">
+  <ion-fab-button style="--background: #128C7E;" >
+    <ion-icon name="send"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-row>
+
+
+</ion-footer>
+
+
+
+
