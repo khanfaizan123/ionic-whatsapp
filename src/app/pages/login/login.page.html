@@ -1,80 +1,89 @@
-
-  <div style="width:19rem;
-  margin-left:20%;">
-  <img
-    src="assets/whatsapp.png"
-    
-  
-  />
+<div style="width: 19rem; margin: 20% auto 0; text-align: center;">
+  <img src="assets/whatsapp.png" style="    width: 30vh;
+    height: 30vh; border-radius: 1rem;" />
 </div>
-  <ion-input
-    *ngIf="!checkotp"
-    [minlength]="10"
-    [(ngModel)]="mobilenumber"
-    (ionChange)="mobilenumber"
-    type="text"
-    style="
-      font-size: larger;
-      border: 4px solid;
-      border-radius: 1rem;
-      text-align: center;
-      position: fixed;
-      top: 70%;
-    "
-    placeholder="Please Enter Number Here"
-    required
-  >
-  </ion-input>
 
-  <ion-button
+<ion-input
+  *ngIf="!checkotp"
    
-    id="sign-in-button"
-    [disabled]="mobilenumber.length<10"
-    expand="block"
-    
-    (click)="enterotp()"
-    style="
-      top: 60%;
-      top: 80%;
-      --background: limegreen;
-      --border-radius: 2rem;
-      position: fixed;
-      width: 99%;
-    "
-    >Send Otp
-  </ion-button>
+  [minlength]="10"
+  [(ngModel)]="mobilenumber"
+  (keyup.enter)="enterotp()"
+  type="text"
+  style="
+    font-size: larger;
+    border: 2px solid #ccc;
+    border-radius: 1rem;
+    text-align: center;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    width: 80%;
+    display: block;
+  "
+  placeholder="Please Enter Number Here"
+  required
+></ion-input>
 
-  <ion-input
-    *ngIf="checkotp"
-    [max]="6"
-    [(ngModel)]="otp"
-    type="number"
+<ion-button
+  
+  [disabled]="mobilenumber.length < 10"
+  expand="block"
+  
+  id="sign-in-button"
+  
+  (click)="enterotp()"
+  style="
+    
+    border-radius: 3rem;
+    margin: 1rem auto;
+    padding: 0.75rem 1.5rem;
+    width: 80%;
+    display: block;
+    font-size: larger;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  "
+>Send OTP</ion-button>
+
+<div *ngIf="checkotp" style="display: flex; justify-content: center;margin: 20px 0;">
+  <div  *ngFor="let item of otparr;let i=index;trackBy:trackByFn">
+    <input
+    type="text"
+    #otpinput
+    maxlength="1"
+    [value]="item"
+    (keydown)="handleback(i,$event)"
+    (input)="moveFocus(i,$event)"
     style="
+      width: 40px;
+      height: 40px;
       font-size: larger;
-      border: 4px solid;
-      border-radius: 1rem;
+      margin:5px;
+      font-size:1.2em;
       text-align: center;
-      position: fixed;
-      top: 70%;
-    "
-    placeholder="Please Enter OTP Here"
-    required
-  >
-  </ion-input>
+    "/>
+  </div>
+  
+  
+</div>
 
-  <ion-button
-    *ngIf="checkotp"
-    [disabled]="otp.length>5"
-    (click)="verifyOtp() "
-    expand="block"
+<ion-button 
+ 
+  (click)="verifyOtp($event)"
+  expand="block"
+  *ngIf="checkotp"
+  style="
     
-    style="
-      top: 60%;
-      top: 80%;
-      --background: limegreen;
-      --border-radius: 2rem;
-      position: fixed;
-      width: 99%;
-    "
-    >Verify Otp
-</ion-button>
+    border-radius: 3rem;
+    margin: 1rem auto;
+    padding: 0.75rem 1.5rem;
+    width: 80%;
+    display: block;
+    font-size: larger;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  "
+>Verify OTP</ion-button>
+
+
+

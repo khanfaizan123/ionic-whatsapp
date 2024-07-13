@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import 'hammerjs';
 
 
 import { HttpClientModule } from  '@angular/common/http';
@@ -19,13 +20,25 @@ import { provideAuth } from '@angular/fire/auth';
 
 import { getAuth } from 'firebase/auth';
 
+import { SwiperModule } from 'swiper/angular';
 
-const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
+// Step 2: Add the following line...
+
+
+
+const config: SocketIoConfig = { url: 'https://ionic-whatsapp.onrender.com', options: {} };
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,provideFirebaseApp(()=>initializeApp(environment.firebase)),provideAuth(()=>getAuth()),SocketIoModule.forRoot(config)],
+  imports: [BrowserModule,
+     IonicModule.forRoot(), 
+     AppRoutingModule,
+     HttpClientModule,
+     provideFirebaseApp(()=>initializeApp(environment.firebase))
+     ,provideAuth(()=>getAuth()),
+     SocketIoModule.forRoot(config),
+     SwiperModule],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]  

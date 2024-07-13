@@ -97,26 +97,25 @@
  
 </ion-content>
 <ion-footer>
-<ion-row>
-  <ion-card  style="border-radius:2rem;text-align:center;font-size:larger;">
-    
-    <ion-input id="myInput"  placeholder="Message" type="text" style="text-align: center;
-    font-size: medium;" [(ngModel)]="textfromuser" (keyup.enter)="sendtext()">
-
-    </ion-input>
-    
+  <div style="display: flex; flex-direction:row;margin:0.5rem;">
   
-  
-</ion-card>
-<ion-fab id="myBtn" (click)="sendtext()"  vertical="bottom" horizontal="end">
-  <ion-fab-button style="--background: #128C7E;" >
-    <ion-icon name="send"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-</ion-row>
+      <ion-input id="myInput" placeholder="Message" type="text"
+                 style="background: black; margin-left: 0.2rem; color: white; 
+                        font-size: larger; white-space: pre-wrap; 
+                        word-wrap: break-word; overflow-wrap: break-word; 
+                        border-radius: 2rem; width: 100%;"
+                 [(ngModel)]="textfromuser" (keyup.enter)="sendtext()" autocomplete="off" ></ion-input>
+     
 
 
+    
+
+    <ion-button style="--background: #128C7E; --border-radius: 50%; margin-left: 10px;" (click)="sendtext()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </div>
 </ion-footer>
+
 
 
 

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
-import { EmailComposer } from '@awesome-cordova-plugins/email-composer';
 import { ChatService } from 'src/app/services/chat.service';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -20,6 +19,7 @@ declare var window: any;
 export class UserChatPage implements OnInit {
   messageSubscription: any;
   @ViewChild('messageContainer', { static: false }) messageContainer!: ElementRef;
+  
 
   constructor(private modal: ModalController, private http: HttpClient,private chatservice:ChatService) {}
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth,signInWithPhoneNumber,RecaptchaVerifier} from '@angular/fire/auth';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,16 @@ appVerifier: any;
   ) { }
   recaptcha(){
    
+    
     this.appVerifier = new RecaptchaVerifier('sign-in-button', {
       size: 'invisible',
-      callback: (response:any) => {
-        console.log(response,"yhin hai");
+      callback: (response: any) => {
+        console.log(response);
       },
-      'expired-callback': () => {}
-    }, this._fireAuth);
+      'expired-callback': () => {
+        // Handle expired reCAPTCHA
+      }
+    }, this._fireAuth); // Assuming _fireAuth is your AngularFireAuth instance
   
   }
 
@@ -46,4 +50,24 @@ async  signInWithPhoneNumber(phonenumber:any){
       throw(e);
     }
   }
+
+  logout() {
+    return this._fireAuth.signOut();
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this._fireAuth.onAuthStateChanged(user => {
+        observer.next(!!user);
+        observer.complete();
+      }, err => {
+        observer.error(err);
+      });
+
+    });
+
+    
+  }
+  
+
 }

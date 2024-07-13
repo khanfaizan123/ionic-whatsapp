@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { register } from 'swiper/element/bundle';
+import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
+import { AuthService } from './services/auth/auth.service';
 
-register();
+
+// import Swiper core and required modules
+import SwiperCore from 'swiper';
+
 
 @Component({
   selector: 'app-root',
@@ -9,5 +14,23 @@ register();
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+ 
+  constructor( private platform: Platform,
+    private authService: AuthService,
+    private router: Router) {
+
+  this.initializeApp();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.authService.isLoggedIn().subscribe(user => {
+        if (user) {
+          this.router.navigate(['/homepage']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      });
+    });
+  }
 }

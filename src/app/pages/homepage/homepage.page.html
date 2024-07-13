@@ -7,22 +7,24 @@
 
   <ion-icon name="camera-outline" style="font-size: 1.5rem;margin-right:-2rem;"(click)="opencamera()" ></ion-icon>
   <ion-icon name="search-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon>
-  <ion-icon id="hover-trigger"  name="options-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon>
+  <!-- <ion-icon id="hover-trigger"  name="options-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon> -->
+  <ion-icon (click)="logout()" name="log-out-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon>
+
 </div>
 
 
   </ion-toolbar>
-  <ion-popover trigger="hover-trigger" triggerAction="hover">
+  <!-- <ion-popover trigger="hover-trigger" triggerAction="hover">
     <ng-template>
       
       <ion-content class="ion-padding">Jaldi Yhan se Hato</ion-content>
     </ng-template>
-  </ion-popover>
+  </ion-popover> -->
 
  
-  
-    <ion-segment swipe-gesture="true"
-    value="chats" style="--background: #128C7E;" (ionChange)="segmentChanged($event)">
+ 
+    <ion-segment #segmentchild 
+    [value]="segmentchild" style="--background: #128C7E;" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="people" [ngStyle]="{'color': activeSegment === 'people' ? 'white' : ''}">
         <ion-icon name="people"></ion-icon>
       </ion-segment-button>
@@ -38,12 +40,14 @@
     </ion-segment>
     
  
+   
+ 
 </ion-header>
 
 <ion-content [fullscreen]="true">
   
   
-
+<!--  
   <div *ngFor="let item of data">
     <ion-row *ngIf="this.activeSegment=='chats'" style="margin-right: -1rem;
     margin-left: 0.5rem;
@@ -61,11 +65,82 @@
          {{item.time}}
       </ion-col>
     </ion-row>
-  </div> 
+  </div>  -->
+   <!-- <swiper-container slides-per-view="1"      >
+    
 
+    <swiper-slide  >
+      <div >
+        People
+      </div>
+      
+    </swiper-slide>
+    <swiper-slide  >
+      <div  *ngFor="let item of data" >
+         <ion-row  style="margin-right: -1rem; margin-left: 0.5rem; margin-top: 1rem;" (click)="openuserchat(item.name)">
+          
+           <ion-col size="2">
+             <ion-avatar style="width:50px;height:47px;">
+               <img  alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+             </ion-avatar>
+           </ion-col>
+           <ion-col size="6" position="stacked" style="margin-top: -1rem;">
+             <h3 style="font-size: 19px;">{{item.name}}</h3>
+             <ion-icon name="checkmark-done-outline"></ion-icon>
+           </ion-col>
+           <ion-col style="text-align:end;" size="3">
+             {{item.time}}
+           </ion-col>
+         </ion-row>
+      </div>
+     </swiper-slide>
+    <swiper-slide >
+      <div  >
+        Status
+      </div>
+       
+    </swiper-slide>
+    <swiper-slide  >
+      <div  >
+        Calls
+      </div>
+    </swiper-slide>
+  </swiper-container>  -->
   
-
-
+  <swiper  #swiper [config]="swiperConfig">
+    <ng-template swiperSlide>
+      <div style=" margin-top: 50%;" >
+        <app-no-content>People</app-no-content>
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <div *ngFor="let item of data">
+        <ion-row *ngIf="this.activeSegment=='chats'" style="margin-right: -1rem;
+        margin-left: 0.5rem;
+        margin-top: 1rem;"  (click)="openuserchat(item.name)">
+          <ion-col size="2">
+            <ion-avatar style="width:50px;height:47px;">
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6" position="stacked" style="margin-top: -1rem;">
+            <h3 style="font-size: 19px;">{{item.name}}</h3>
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+          </ion-col>
+          <ion-col style="text-align:end;" size="3">
+             {{item.time}}
+          </ion-col>
+        </ion-row>
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <div style="margin-top: 50%;" > <app-no-content>status</app-no-content></div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <div style="margin-top: 50%;" > <app-no-content>calls</app-no-content></div>
+    </ng-template>
+  </swiper>
+  
 </ion-content>
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openmodal()" style="--background: #128C7E;">
