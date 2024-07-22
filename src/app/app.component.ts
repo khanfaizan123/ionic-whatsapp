@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { AuthService } from './services/auth/auth.service';
@@ -6,6 +6,7 @@ import { AuthService } from './services/auth/auth.service';
 
 // import Swiper core and required modules
 import SwiperCore from 'swiper';
+import { FcmService } from './services/fcm/fcm.service';
 
 
 @Component({
@@ -13,13 +14,21 @@ import SwiperCore from 'swiper';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
  
   constructor( private platform: Platform,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+  private fcmService:FcmService) {
 
   this.initializeApp();
+  }
+
+  ngOnInit(){
+    this.fcmService.requestPermission();
+    this.fcmService.listenForMessages();
+    this.fcmService.checkPermissions();
+    console.log(this.fcmService.listenForMessages());
   }
 
   initializeApp() {

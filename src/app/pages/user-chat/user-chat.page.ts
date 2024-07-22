@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { ChatService } from 'src/app/services/chat.service';
-import { catchError } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 
 // declare var cordova: any;
 
@@ -19,9 +20,11 @@ declare var window: any;
 export class UserChatPage implements OnInit {
   messageSubscription: any;
   @ViewChild('messageContainer', { static: false }) messageContainer!: ElementRef;
+  messages: { text: string, sender: 'me' | 'other' }[] = [];
+
   
 
-  constructor(private modal: ModalController, private http: HttpClient,private chatservice:ChatService) {}
+  constructor(private modalController: ModalController, private http: HttpClient,private chatservice:ChatService,private actionSheetController:ActionSheetController) {}
 
   name: any = '';
   itemList: any[] = [];
@@ -30,23 +33,35 @@ export class UserChatPage implements OnInit {
     this.callchatapi();
     
    
+   
   }
   backpage() {
-    this.modal.dismiss();
+    this.modalController.dismiss();
    
   }
 
   ngOnInit() {
     console.log("ngoninit");
-    console.log('Subscribing to getMessage...');
- 
-    this.chatservice.getMessage()
-    .subscribe((message: any) => {
-      console.log('Received message:', message);
+    
+    if(localStorage.getItem('photo')){
+      this.imageUrl=localStorage.getItem('photo');
+   }else{
+     this.chatservice.imageUrl$.subscribe(url => {
+       this.imageUrl = url;
+     }); 
+   }
+  var currentUserUID = localStorage.getItem('currentuser');
+
+  console.log(currentUserUID);
+    this.chatservice.getMessage().subscribe((msg: any) => {
+      console.log('Received message:', msg);
       //this.textlist=[];
-      this.textlist.push(message.data);
+      console.log(msg.data.user,"id yha h");
+      const sender = msg.data.user != currentUserUID ? 'other':'me';
+      this.messages.push({ text: msg.data.text, sender });
       this.scrollToBottom();
     });
+    
    
   }
   scrollToBottom() {
@@ -82,14 +97,10 @@ export class UserChatPage implements OnInit {
   this.usersendmsg = this.textfromuser;
   
   
-    // Assuming sendMessage returns a Promise or is awaited correctly
-     this.chatservice.sendMessage(this.textfromuser);
-    //this.textlist.push(this.textfromuser);
-   
  
+ // this.messages.push({ text: this.textfromuser, sender: 'me' });
+     this.chatservice.sendMessage(this.textfromuser);
    
-    
-    // Clear input after sending message
     this.textfromuser = '';
  
   }
@@ -104,6 +115,21 @@ export class UserChatPage implements OnInit {
     this.name = item;
     this.isListOpen = false;
   } 
+
+  imageUrl: any='';
+
+ 
+
+  async openImageModal() {
+   
+
+   const modal = await this.modalController.create({
+      component: ImageModalComponent,
+    
+    });
+  return modal.present();
+  }
+
 }
 
 

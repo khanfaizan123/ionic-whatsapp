@@ -1,18 +1,33 @@
-<ion-header class="ion-no-border" >
-  <ion-toolbar style="--background: #128C7E;" lines="none" >
-    <div style="display: grid;
-    flex-direction: row;
-    grid-template-columns: auto auto auto auto;color:white">
-  <ion-title style="font-weight:600;font-style:Nunito-Sans;">WhatsApp</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #128c7e" lines="none">
+    <div
+      style="
+        display: grid;
+        flex-direction: row;
+        grid-template-columns: auto auto auto auto;
+        color: white;
+      "
+    >
+      <ion-title style="font-weight: 600; font-style: Nunito-Sans"
+        >WhatsApp</ion-title
+      >
 
-  <ion-icon name="camera-outline" style="font-size: 1.5rem;margin-right:-2rem;"(click)="opencamera()" ></ion-icon>
-  <ion-icon name="search-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon>
-  <!-- <ion-icon id="hover-trigger"  name="options-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon> -->
-  <ion-icon (click)="logout()" name="log-out-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon>
-
-</div>
-
-
+      <ion-icon
+        name="camera-outline"
+        style="font-size: 1.5rem; margin-right: -2rem"
+        (click)="opencamera()"
+      ></ion-icon>
+      <ion-icon
+        name="search-outline"
+        style="font-size: 1.5rem; margin-right: -2rem"
+      ></ion-icon>
+      <!-- <ion-icon id="hover-trigger"  name="options-outline" style="font-size: 1.5rem;margin-right:-2rem;"></ion-icon> -->
+      <ion-icon
+        (click)="logout()"
+        name="log-out-outline"
+        style="font-size: 1.5rem; margin-right: -2rem"
+      ></ion-icon>
+    </div>
   </ion-toolbar>
   <!-- <ion-popover trigger="hover-trigger" triggerAction="hover">
     <ng-template>
@@ -21,130 +36,80 @@
     </ng-template>
   </ion-popover> -->
 
- 
- 
-    <ion-segment #segmentchild 
-    [value]="segmentchild" style="--background: #128C7E;" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="people" [ngStyle]="{'color': activeSegment === 'people' ? 'white' : ''}">
-        <ion-icon name="people"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="chats" [ngStyle]="{'color': activeSegment === 'chats' ? 'white' : ''}">
-        <span>Chats</span>
-      </ion-segment-button>
-      <ion-segment-button value="status" [ngStyle]="{'color': activeSegment === 'status' ? 'white' : ''}">
-        <span>Status</span>
-      </ion-segment-button>
-      <ion-segment-button value="calls" [ngStyle]="{'color': activeSegment === 'calls' ? 'white' : ''}">
-        <span>Calls</span>
-      </ion-segment-button>
-    </ion-segment>
-    
- 
-   
- 
+  <ion-segment
+    #segmentchild
+    [value]="segmentchild"
+    style="--background: #128c7e"
+    (ionChange)="segmentChanged($event)"
+  >
+    <ion-segment-button
+      value="people"
+      [ngStyle]="{'color': activeSegment === 'people' ? 'white' : ''}"
+    >
+      <ion-icon name="people"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button
+      value="chats"
+      [ngStyle]="{'color': activeSegment === 'chats' ? 'white' : ''}"
+    >
+      <span>Chats</span>
+    </ion-segment-button>
+    <ion-segment-button
+      value="status"
+      [ngStyle]="{'color': activeSegment === 'status' ? 'white' : ''}"
+    >
+      <span>Status</span>
+    </ion-segment-button>
+    <ion-segment-button
+      value="calls"
+      [ngStyle]="{'color': activeSegment === 'calls' ? 'white' : ''}"
+    >
+      <span>Calls</span>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  
-  
-<!--  
-  <div *ngFor="let item of data">
-    <ion-row *ngIf="this.activeSegment=='chats'" style="margin-right: -1rem;
-    margin-left: 0.5rem;
-    margin-top: 1rem;"  (click)="openuserchat(item.name)">
-      <ion-col size="2">
-        <ion-avatar style="width:50px;height:47px;">
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-      </ion-col>
-      <ion-col size="6" position="stacked" style="margin-top: -1rem;">
-        <h3 style="font-size: 19px;">{{item.name}}</h3>
-        <ion-icon name="checkmark-done-outline"></ion-icon>
-      </ion-col>
-      <ion-col style="text-align:end;" size="3">
-         {{item.time}}
-      </ion-col>
-    </ion-row>
-  </div>  -->
-   <!-- <swiper-container slides-per-view="1"      >
-    
-
-    <swiper-slide  >
-      <div >
-        People
-      </div>
-      
-    </swiper-slide>
-    <swiper-slide  >
-      <div  *ngFor="let item of data" >
-         <ion-row  style="margin-right: -1rem; margin-left: 0.5rem; margin-top: 1rem;" (click)="openuserchat(item.name)">
-          
-           <ion-col size="2">
-             <ion-avatar style="width:50px;height:47px;">
-               <img  alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-             </ion-avatar>
-           </ion-col>
-           <ion-col size="6" position="stacked" style="margin-top: -1rem;">
-             <h3 style="font-size: 19px;">{{item.name}}</h3>
-             <ion-icon name="checkmark-done-outline"></ion-icon>
-           </ion-col>
-           <ion-col style="text-align:end;" size="3">
-             {{item.time}}
-           </ion-col>
-         </ion-row>
-      </div>
-     </swiper-slide>
-    <swiper-slide >
-      <div  >
-        Status
-      </div>
-       
-    </swiper-slide>
-    <swiper-slide  >
-      <div  >
-        Calls
-      </div>
-    </swiper-slide>
-  </swiper-container>  -->
-  
-  <swiper  #swiper [config]="swiperConfig">
+<ion-content >
+ 
+  <swiper #swiper [config]="swiperConfig">
     <ng-template swiperSlide>
-      <div style=" margin-top: 50%;" >
+      <div style="margin-top:3rem">
         <app-no-content>People</app-no-content>
       </div>
     </ng-template>
     <ng-template swiperSlide>
       <div *ngFor="let item of data">
-        <ion-row *ngIf="this.activeSegment=='chats'" style="margin-right: -1rem;
-        margin-left: 0.5rem;
-        margin-top: 1rem;"  (click)="openuserchat(item.name)">
+        <ion-row
+          *ngIf="this.activeSegment=='chats'"
+          style="margin-right: -1rem; margin-left: 0.5rem; margin-top: 1rem"
+          (click)="openuserchat(item.name)"
+        >
           <ion-col size="2">
-            <ion-avatar style="width:50px;height:47px;">
-              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            <ion-avatar style="width: 50px; height: 47px" >
+              <img
+                alt="image"
+                [src]="imageUrl"
+              />
             </ion-avatar>
           </ion-col>
-          <ion-col size="6" position="stacked" style="margin-top: -1rem;">
-            <h3 style="font-size: 19px;">{{item.name}}</h3>
+          <ion-col size="6" position="stacked" style="margin-top: -1rem">
+            <h3 style="font-size: 19px">{{item.name}}</h3>
             <ion-icon name="checkmark-done-outline"></ion-icon>
           </ion-col>
-          <ion-col style="text-align:end;" size="3">
-             {{item.time}}
-          </ion-col>
+          <ion-col style="text-align: end" size="3"> {{item.time}} </ion-col>
         </ion-row>
       </div>
     </ng-template>
     <ng-template swiperSlide>
-      <div style="margin-top: 50%;" > <app-no-content>status</app-no-content></div>
+      <div style="margin-top:3rem"><app-no-content>status</app-no-content></div>
     </ng-template>
     <ng-template swiperSlide>
-      <div style="margin-top: 50%;" > <app-no-content>calls</app-no-content></div>
+      <div style="margin-top:3rem"><app-no-content>calls</app-no-content></div>
     </ng-template>
   </swiper>
-  
 </ion-content>
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="openmodal()" style="--background: #128C7E;">
-      
-      <img src="assets/mail.png" style="width: 35px"/>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-fab-button (click)="openmodal()" style="--background: #128c7e">
+    <img src="assets/mail.png" style="width: 35px" />
+  </ion-fab-button>
+</ion-fab>

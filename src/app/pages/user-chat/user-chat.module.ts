@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserChatPageRoutingModule } from './user-chat-routing.module';
 import { UserChatPage } from './user-chat.page';
 
-
+import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { UserChatPage } from './user-chat.page';
     IonicModule,
     UserChatPageRoutingModule
   ], 
-  declarations: [UserChatPage],
+  declarations: [UserChatPage,ImageModalComponent],
   providers:[]
   
 

@@ -36,12 +36,15 @@ Swiper.use([Pagination]);
   styleUrls: ['./homepage.page.scss'],
 })
 export class HomepagePage implements AfterViewInit {
-  logout() {
-    console.log('logout');
-    this.auth.logout();
-    setTimeout(() => {
-      this.route.navigate(['/login']);
-    }, 1000);
+  imageUrl: any;
+ async logout() {
+    localStorage.clear();
+   await this.auth.logout();
+   this.navCtrl.navigateRoot(['login'], {
+    animated: true,
+    animationDirection: 'forward'
+  });
+    
   }
 
   @ViewChild('swiper', { static: false }) swiperRef!: SwiperComponent;
@@ -55,7 +58,7 @@ export class HomepagePage implements AfterViewInit {
     }
   };
 
-slidechange:boolean=false;
+  slidechange:boolean=false;
   firsttimechange:boolean=false;
   onSlideChange(ev:any) {
  
@@ -66,6 +69,14 @@ slidechange:boolean=false;
   }
   ngAfterViewInit() {
     this.onSlideChange(this.swiperRef.swiperRef.activeIndex=1); 
+    if(localStorage.getItem('photo')){
+       this.imageUrl=localStorage.getItem('photo');
+    }else{
+      this.chatservice.imageUrl$.subscribe(url => {
+        this.imageUrl = url;
+      }); 
+    }
+   
   }
 
   activeSegment: any = 'chats';
@@ -81,7 +92,7 @@ slidechange:boolean=false;
     private gestureCtrl: GestureController
   ) {
     this.callchatapi();
-    
+   
     this.platform.backButton.subscribe(() => {
       if (this.route.url === '/home') {
         //App.exitApp();
@@ -162,7 +173,7 @@ slidechange:boolean=false;
     modal.present();
   }
 
-  index = 0;
+ 
 
  
 }

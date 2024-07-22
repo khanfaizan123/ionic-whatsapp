@@ -1,122 +1,153 @@
 <ion-header [translucent]="true">
-  <ion-toolbar style="--background: #128C7E;" lines="none" >
-    <div style="display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: center;
-    grid-template-columns: auto auto auto auto auto auto;
-    color: white;">
-    <ion-icon name="arrow-back-sharp" style="font-size:x-large;" (click)="backpage()"></ion-icon>
-    <ion-avatar style="width:32px;height:32px;margin-left: -1.0rem;">
-      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-    </ion-avatar>
+  <ion-toolbar style="--background: #128c7e" lines="none">
+    <div
+      style="
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        align-items: center;
+        grid-template-columns: auto auto auto auto auto auto;
+        color: white;
+      "
+    >
+      <ion-icon
+        name="arrow-back-sharp"
+        style="font-size: x-large"
+        (click)="backpage()"
+      ></ion-icon>
+      <ion-avatar style="width: 32px; height: 32px; margin-left: -1rem">
+        <img
+          alt="Silhouette of a person's head"
+          [src]="imageUrl"
+          (click)="openImageModal()"
+        />
+        />
+      </ion-avatar>
 
-    <ion-input  id="yup"
-    [(ngModel)]="name"
-    (click)="openList()"
-    style="--background: transparent; font-weight: 600; font-size: large;width: 44%;margin-left:-1rem;"
-  ></ion-input>
+      <ion-input
+        id="yup"
+        [(ngModel)]="name"
+        (click)="openList()"
+        style="
+          --background: transparent;
+          font-weight: 600;
+          font-size: large;
+          width: 44%;
+          margin-left: -1rem;
+        "
+      ></ion-input>
 
+      <ion-popover trigger="yup">
+        <ng-template>
+          <ion-list *ngIf="isListOpen">
+            <ion-item
+              *ngFor="let item of itemList"
+              (click)="selectItem(item.name)"
+            >
+              {{ item.name }}
+            </ion-item>
+          </ion-list>
+        </ng-template>
+      </ion-popover>
 
-  <ion-popover trigger="yup">
-    <ng-template>
-      <ion-list *ngIf="isListOpen">
-        <ion-item *ngFor="let item of itemList" (click)="selectItem(item.name)">
-          {{ item.name }}
-        </ion-item>
-      </ion-list>
-    </ng-template>
-  </ion-popover>
-
-  
-  
-
-
-  <ion-icon name="videocam" style="font-size: 1.5rem;margin-top:0.2rem;" ></ion-icon>
-  <ion-icon name="call" style="font-size: 1.5rem;margin-top:0.2rem;"></ion-icon>
-  <ion-icon id="hover-trigger" name="options" style="font-size: 1.5rem;margin-top:0.2rem;"></ion-icon>
-</div>
-
-
+      <ion-icon
+        name="videocam"
+        style="font-size: 1.5rem; margin-top: 0.2rem"
+      ></ion-icon>
+      <ion-icon
+        name="call"
+        style="font-size: 1.5rem; margin-top: 0.2rem"
+      ></ion-icon>
+      <ion-icon
+        id="hover-trigger"
+        name="options"
+        style="font-size: 1.5rem; margin-top: 0.2rem"
+      ></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content  [fullscreen]="true" >
- 
-     <div #messageContainer *ngFor="let item of textlist"  >
-      <ion-item    *ngIf="item.length>0" style="
-        
-        border: 2px;
-        width:fit-content;
-        clear:both;
-
+<ion-content [fullscreen]="true">
+  <div #messageContainer *ngFor="let item of messages">
+    <ion-item
+      *ngIf="item.text.length>0 && item.sender=='other'"
+      style="
+        float: left;
+        clear: both;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word; /* Add this line to ensure long words break properly */
+        width: fit-content;
         border-radius: 1rem;
-        margin: 1rem;
+        margin: 0.4rem;
         border-top-left-radius: 0rem;
         font-size: larger;
-        font-family: Nunito-Sans;
+        font-family: Nunito-Sans, sans-serif;
         font-style: normal;
-        background: white;"  >
-         {{item}}
-        
-         <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>        
-      </ion-item>
-
-
-      <ion-item    *ngIf="item.length>0" style="
-       
-        border: 2px;
-        border-radius: 1rem;
-        margin: 1rem;
-        float:right;
-        clear:both;
-        
-        --background:lightcyan;
-        width:fit-content;
+        background-color: white;
         color:black;
+      "
+    >
+      {{item.text}}
+
+      <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item
+      *ngIf="item.text.length>0 && item.sender=='me'"
+      style="
+       
+        clear: both;
+        word-wrap: break-word;
+        float:right;
+        overflow-wrap: break-word;
+        word-break: break-word; /* Add this line to ensure long words break properly */
+        width: fit-content;
+        border-radius: 1rem;
+        margin: 0.4rem;
         border-top-right-radius: 0rem;
         font-size: larger;
-        font-family: Nunito-Sans;
+        font-family: Nunito-Sans, sans-serif;
         font-style: normal;
-        background: white;"  >
-         {{item}}
+        background:#7FFFD4;
         
-         <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>    
+      "
+    >
+      {{item.text}}
 
-</ion-item>
-
-
-
-  
-
-    </div> 
-
-    
-  
-  
- 
+      <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>
+    </ion-item>
+  </div>
 </ion-content>
 <ion-footer>
-  <div style="display: flex; flex-direction:row;margin:0.5rem;">
-  
-      <ion-input id="myInput" placeholder="Message" type="text"
-                 style="background: black; margin-left: 0.2rem; color: white; 
-                        font-size: larger; white-space: pre-wrap; 
-                        word-wrap: break-word; overflow-wrap: break-word; 
-                        border-radius: 2rem; width: 100%;"
-                 [(ngModel)]="textfromuser" (keyup.enter)="sendtext()" autocomplete="off" ></ion-input>
-     
+  <div style="display: flex; flex-direction: row; margin: 0.5rem">
+    <ion-textarea
+      id="myInput"
+      style="
+        background: black;
+        color: white;
+        font-size: larger;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        border-radius: 2rem;
+        width: calc(100% - 60px);
+        resize: none;
+        overflow-y: auto;
+        height: 50px;
+        box-sizing: border-box;
+        text-align: center;
+      "
+      [(ngModel)]="textfromuser"
+      (keyup.enter)="sendtext()"
+      placeholder="Message"
+      auto-grow="true"
+    ></ion-textarea>
 
-
-    
-
-    <ion-button style="--background: #128C7E; --border-radius: 50%; margin-left: 10px;" (click)="sendtext()">
+    <ion-button
+      style="--background: #128c7e; --border-radius: 50%; margin-left: 10px"
+      (click)="sendtext()"
+    >
       <ion-icon name="send"></ion-icon>
     </ion-button>
   </div>
 </ion-footer>
-
-
-
-
-

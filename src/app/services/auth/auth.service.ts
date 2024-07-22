@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth,signInWithPhoneNumber,RecaptchaVerifier} from '@angular/fire/auth';
+import { AlertController } from '@ionic/angular';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -10,7 +11,8 @@ export class AuthService {
 appVerifier: any;
   confirmationResult: any;
   constructor(
-    private _fireAuth:Auth
+    private _fireAuth:Auth,
+    private alertctrl:AlertController
   ) { }
   recaptcha(){
    
@@ -35,6 +37,12 @@ async  signInWithPhoneNumber(phonenumber:any){
       this.confirmationResult = confirmationResult;
       return confirmationResult;
     } catch(e) {
+    const alert= this.alertctrl.create({
+      header: 'Alert',
+      message: 'Too Many Request Done For Otp Wait For Some Time',
+      buttons: ['OK'],
+    });
+    (await alert).present();
       throw(e);
     }
   }
@@ -44,15 +52,18 @@ async  signInWithPhoneNumber(phonenumber:any){
       if(!this.appVerifier) this.recaptcha();
       const result = await this.confirmationResult.confirm(otp);
       console.log(result);
-      const user = result?.user;
-      console.log(user);
+     
+        localStorage.setItem('currentuser',result?.user.uid);
+       console.log(result,JSON.parse(result?.user.uid));
+   
+   
     } catch(e) {
       throw(e);
     }
   }
 
-  logout() {
-    return this._fireAuth.signOut();
+async  logout() {
+    return await this._fireAuth.signOut();
   }
 
   isLoggedIn(): Observable<boolean> {

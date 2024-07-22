@@ -71,7 +71,7 @@ export class LoginPage implements OnInit, AfterViewInit {
         animated: true,
         animationDirection: 'forward',
       });
-    }
+   }
   }
 
   handleback(i: any, e: any) {
@@ -102,11 +102,12 @@ export class LoginPage implements OnInit, AfterViewInit {
 
       this.arr.find((user) => {
         if (user.phonenumber == this.mobilenumber) {
-          console.log(user.phonenumber, 'yhi pe hai');
+         
           this.gotohomepage();
         }
       });
     } catch (e) {
+    await  loading.dismiss();
       const alert = await this.alertController.create({
         header: 'Alert',
         message: 'Please Enter Correct Otp',

@@ -9,6 +9,7 @@ import { HomepagePageRoutingModule } from './homepage-routing.module';
 import { HomepagePage } from './homepage.page';
 import { NoContentComponent } from 'src/app/pages/no-content/no-content.component';
 import { SwiperModule } from 'swiper/angular';
+import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { SwiperModule } from 'swiper/angular';
     
     SwiperModule,
    
-    
+   
     IonicModule,
     HomepagePageRoutingModule
   ],

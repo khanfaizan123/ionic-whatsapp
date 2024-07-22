@@ -48,7 +48,7 @@
 <div *ngIf="checkotp" style="display: flex; justify-content: center;margin: 20px 0;">
   <div  *ngFor="let item of otparr;let i=index;trackBy:trackByFn">
     <input
-    type="text"
+    type="number"
     #otpinput
     maxlength="1"
     [value]="item"

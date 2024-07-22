@@ -1,3 +1,8 @@
 ion-segment-button::part(indicator-background) {
   background: white;
+  color: white;
+}
+
+ion-segment-button::part(button-native) {
+  color: white; /* Change text color to blue */
 }
