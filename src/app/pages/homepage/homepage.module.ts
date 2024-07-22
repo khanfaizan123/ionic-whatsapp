@@ -14,7 +14,7 @@ import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule, 
+    FormsModule,  
     
     SwiperModule, 
    
