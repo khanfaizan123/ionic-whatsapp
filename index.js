@@ -7,7 +7,7 @@ const server = http.createServer(app); // Create an HTTP server
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require('/Users/faizan khan/Downloads/clone-57827-firebase-adminsdk-uu92q-0d35d41223.json');
+const serviceAccount = require('./src/app/clone-57827-firebase-adminsdk-uu92q-0d35d41223.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
