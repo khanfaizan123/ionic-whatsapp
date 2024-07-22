@@ -7,7 +7,7 @@ const server = http.createServer(app); // Create an HTTP server
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require('./src/assets/serviceAccountkey.json');
+const serviceAccount = require(': https://github.com/khanfaizan123/ionic-whatsapp/blob/112ac71f89573c34ddd92fb22d77a1d35796422e/src/app/clone-57827-firebase-adminsdk-uu92q-0d35d41223.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
