@@ -16,7 +16,7 @@ import { ImageModalComponent } from 'src/app/image-modal/image-modal.component';
     CommonModule,
     FormsModule, 
     
-    SwiperModule,
+    SwiperModule, 
    
    
     IonicModule,
