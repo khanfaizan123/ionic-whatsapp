@@ -36,7 +36,7 @@ const io = new Server(server, {
       }
 });
 io.on('connection', (socket) => {
-    console.log('A user connected');
+    console.log('A user connected'); 
     socket.on('message', (data) => {
  
         io.emit('received', { data: data, message: 'This is a text msg from server' });
