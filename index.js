@@ -7,7 +7,7 @@ const server = http.createServer(app); // Create an HTTP server
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require('./src/app/clone-57827-firebase-adminsdk-uu92q-0d35d41223.json');
+const serviceAccount = require('./src/assets/serviceAccountkey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -40,8 +40,9 @@ io.on('connection', (socket) => {
     socket.on('message', (data) => {
  
         io.emit('received', { data: data, message: 'This is a text msg from server' });
-        const recipientToken = data.recipientId; // Define how to get the recipient token
-        sendPushNotification(recipientToken, data.message);
+        const recipientToken = data.token; // Define how to get the recipient \token
+        console.log(recipientToken,"token h");
+        sendPushNotification(recipientToken, data.text);
     });
 });
 

@@ -16,8 +16,9 @@ export class FcmService {
     this.afMessaging.requestToken
       .pipe(take(1))
       .subscribe(
-        (token) => {
+        (token:any) => {
           console.log(token);
+          localStorage.setItem('fcm_token',token);
           // Send the token to your server to store it and use it to send notifications
         },
         (error) => {

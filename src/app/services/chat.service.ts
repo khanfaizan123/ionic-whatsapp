@@ -22,8 +22,9 @@ export class ChatService {
   sendMessage(msg: string) {
     console.log(msg);
     const uid = localStorage.getItem('currentuser');
+    const token=localStorage.getItem('fcm_token');
     console.log(uid);
-    this.socket.emit('message', { text: msg,user: uid });
+    this.socket.emit('message', { text: msg,user: uid,token:token });
     
   }
 public getMessage() {
