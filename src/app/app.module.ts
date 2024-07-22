@@ -43,7 +43,7 @@ const config: SocketIoConfig = { url: 'https://ionic-whatsapp.onrender.com', opt
      SocketIoModule.forRoot(config),
      SwiperModule,MessagingModule,
 
-     
+     AngularFireModule.initializeApp(environment.firebase), 
 
      ],
   providers: [MessagingModule,AngularFireMessaging],

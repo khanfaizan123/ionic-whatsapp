@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
     socket.on('message', (data) => {
  
         io.emit('received', { data: data, message: 'This is a text msg from server' });
-        const recipientToken = getRecipientToken(data.recipientId); // Define how to get the recipient token
+        const recipientToken = data.recipientId; // Define how to get the recipient token
         sendPushNotification(recipientToken, data.message);
     });
 });
