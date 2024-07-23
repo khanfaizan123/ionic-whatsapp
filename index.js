@@ -1,13 +1,17 @@
 const express = require('express');
 const http = require('http');  
 const { Server } = require('socket.io'); 
+require('dotenv').config();
 const app = express(); 
 const server = http.createServer(app); // Create an HTTP server
 
 
 const admin = require('firebase-admin');
 
-const serviceAccount = require(': https://github.com/khanfaizan123/ionic-whatsapp/blob/112ac71f89573c34ddd92fb22d77a1d35796422e/src/app/clone-57827-firebase-adminsdk-uu92q-0d35d41223.json');
+const serviceAccountBase64 = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64;
+const serviceAccountJson = Buffer.from(serviceAccountBase64, 'base64').toString('utf-8');
+const serviceAccount = JSON.parse(serviceAccountJson);
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
