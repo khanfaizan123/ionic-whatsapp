@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Auth,signInWithPhoneNumber,RecaptchaVerifier} from '@angular/fire/auth';
+import {Auth,signInWithPhoneNumber,RecaptchaVerifier, sendSignInLinkToEmail} from '@angular/fire/auth';
+
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Observable, from } from 'rxjs';
 
@@ -12,7 +14,8 @@ appVerifier: any;
   confirmationResult: any;
   constructor(
     private _fireAuth:Auth,
-    private alertctrl:AlertController
+    private alertctrl:AlertController,
+  
   ) { }
   recaptcha(){
    
@@ -20,32 +23,47 @@ appVerifier: any;
     this.appVerifier = new RecaptchaVerifier('sign-in-button', {
       size: 'invisible',
       callback: (response: any) => {
-        console.log(response);
+        
+       
       },
       'expired-callback': () => {
         // Handle expired reCAPTCHA
       }
     }, this._fireAuth); // Assuming _fireAuth is your AngularFireAuth instance
-  
+    console.log(this.appVerifier,"appveriifr");
   }
 
 
-async  signInWithPhoneNumber(phonenumber:any){
+  async signInWithPhoneNumber(phoneNumber: string) {
     try {
-      if(!this.appVerifier) this.recaptcha();
-      const confirmationResult =await  signInWithPhoneNumber(this._fireAuth, phonenumber, this.appVerifier);
-      this.confirmationResult = confirmationResult;
-      return confirmationResult;
-    } catch(e) {
-    const alert= this.alertctrl.create({
-      header: 'Alert',
-      message: 'Too Many Request Done For Otp Wait For Some Time',
-      buttons: ['OK'],
-    });
-    (await alert).present();
-      throw(e);
+      if (!this.appVerifier) this.recaptcha();
+      
+      
+          const confirmationResult = await signInWithPhoneNumber(this._fireAuth, phoneNumber, this.appVerifier);
+          this.confirmationResult = confirmationResult;
+       
+        } catch (e:any) {
+          let errorMessage = 'Too many requests for OTP. Please wait for some time.';
+
+          if (e.code === 'auth/quota-exceeded') {
+            errorMessage = 'Quota exceeded. Please try again later.';
+          } else if (e.code === 'auth/invalid-app-credential') {
+            errorMessage = 'Invalid API key. Please check your API key and try again.';
+          } else if (e.message.includes('API key not valid')) {
+            errorMessage = 'Invalid API key. Please check your API key and try again.';
+          }
+      
+          const alert = await this.alertctrl.create({
+            header: 'Alert',
+            message: errorMessage,
+            buttons: ['OK']
+          });
+          await alert.present();
+          console.error('Error during sign-in:', e);
     }
-  }
+  
+}
+
 
   async verifyOtp(otp:any) {
     try {

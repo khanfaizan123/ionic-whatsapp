@@ -23,13 +23,14 @@
   placeholder="Please Enter Number Here"
   required
 ></ion-input>
+<div  id="sign-in-button"></div>
 
 <ion-button
   
   [disabled]="mobilenumber.length < 10"
   expand="block"
   
-  id="sign-in-button"
+  *ngIf="!checkotp"
   
   (click)="enterotp()"
   style="
