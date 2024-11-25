@@ -5,7 +5,6 @@ const { Server } = require('socket.io');
 const app = express(); 
 const server = http.createServer(app); 
 
-
 // const admin = require('firebase-admin');
 
 // const serviceAccountBase64 = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64;
@@ -36,10 +35,11 @@ const server = http.createServer(app);
 // }
 const io = new Server(server, {
     cors: {
-      origin: 'http://localhost:8100', // Allowed origin
-      methods: ['GET', 'POST'], // Allowed methods
-      credentials: true, // Allow cookies if needed
+      origin: '*', // Allowed origin
+      methods: ['GET', 'POST'] // Allowed methods
+      
     }, 
+    transports: ['polling', 'websocket'],
   });
   
 io.on('connection', (socket) => { 

@@ -3,5 +3,12 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxy": {
+    "/socket.io": {
+      "target": "https://ionic-whatsapp.onrender.com",
+      "changeOrigin": true,
+      "secure": false
+    }
+  }
 }
