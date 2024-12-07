@@ -42,7 +42,7 @@
           <ion-list *ngIf="isListOpen">
             <ion-item
               *ngFor="let item of itemList"
-              (click)="selectItem(item.name)"
+              (click)="selectItem(item)"
             >
               {{ item.name }}
             </ion-item>
@@ -67,84 +67,112 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div #messageContainer *ngFor="let item of messages">
-    <ion-item
-      *ngIf="item.text.length>0 && item.sender=='other'"
-      style="
-        float: left;
-        clear: both;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        word-break: break-word; /* Add this line to ensure long words break properly */
-        width: fit-content;
-        border-radius: 1rem;
-        margin: 0.4rem;
-        border-top-left-radius: 0rem;
-        font-size: larger;
-        font-family: Nunito-Sans, sans-serif;
-        font-style: normal;
-        background-color: white;
-        color:black;
-      "
-    >
-      {{item.text}}
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div #messageContainer class="message-container">
+    <!-- Loop through messages and display them -->
 
-      <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>
-    </ion-item>
+    <div *ngFor="let item of messages">
+      <!-- Messages from 'other' -->
+      <ion-item
+        *ngIf="item.text.length > 0 && item.sender == 'other'"
+        style="
+          float: left;
+          clear: both;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          word-break: break-word;
+          width: fit-content;
+          border-radius: 1rem;
+          margin: 0.4rem;
+          border-top-left-radius: 0rem;
+          font-size: larger;
+          font-family: Nunito-Sans, sans-serif;
+          font-style: normal;
+          background-color: white;
+          color: black;
+        "
+      >
+        <div style="text-align: right">
+          <span>{{ item.text }}</span>
+          <span style="font-size: small; color: gray; margin-top: 0.5rem">
+            {{ item.time | date: 'shortTime' }}
+          </span>
+         
+        </div>
+      </ion-item>
 
-    <ion-item
-      *ngIf="item.text.length>0 && item.sender=='me'"
-      style="
-       
-        clear: both;
-        word-wrap: break-word;
-        float:right;
-        overflow-wrap: break-word;
-        word-break: break-word; /* Add this line to ensure long words break properly */
-        width: fit-content;
-        border-radius: 1rem;
-        margin: 0.4rem;
-        border-top-right-radius: 0rem;
-        font-size: larger;
-        font-family: Nunito-Sans, sans-serif;
-        font-style: normal;
-        background:#7FFFD4;
-        
-      "
-    >
-      {{item.text}}
-
-      <ion-icon color="primary" name="checkmark-done-outline"></ion-icon>
-    </ion-item>
+      <!-- Messages from 'me' -->
+      <ion-item
+        *ngIf="item.text.length > 0 && item.sender == 'me'"
+        style="
+          clear: both;
+          word-wrap: break-word;
+          float: right;
+          overflow-wrap: break-word;
+          word-break: break-word;
+          width: fit-content;
+          border-radius: 1rem;
+          margin: 0.4rem;
+          border-top-right-radius: 0rem;
+          font-size: larger;
+          font-family: Nunito-Sans, sans-serif;
+          font-style: normal;
+          --background: #dcf8c6;
+        "
+      >
+        <div style="text-align: right">
+          <span>{{ item.text }}</span>
+          <span style="font-size: small; color: gray; margin-top: 0.5rem">
+            {{ item.time | date: 'shortTime' }}
+          </span>
+          <ion-icon
+            style="margin-top: 0.5rem"
+            color="primary"
+            name="checkmark-done-outline"
+          ></ion-icon>
+        </div>
+      </ion-item>
+    </div>
   </div>
+
+  <!-- Floating 'Go to Bottom' Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button
+      *ngIf="showScrollToBottom"
+      (click)="scrollToBottom()"
+      size="small"
+      color="primary"
+    >
+      <ion-icon name="arrow-down-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+
 <ion-footer>
   <div style="display: flex; flex-direction: row; margin: 0.5rem">
     <ion-textarea
-      id="myInput"
-      style="
-        background: black;
-        color: white;
-        font-size: larger;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        border-radius: 2rem;
-        width: calc(100% - 60px);
-        resize: none;
-        overflow-y: auto;
-        height: 50px;
-        box-sizing: border-box;
-        text-align: center;
-      "
       [(ngModel)]="textfromuser"
-      (keyup.enter)="sendtext()"
-      placeholder="Message"
+      placeholder="Type a message"
       auto-grow="true"
-    ></ion-textarea>
+      autofocus="true"
+      style="
+        resize: none;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 20px;
+      "
+      (keyup.enter)="sendtext()"
+    >
+    </ion-textarea>
 
     <ion-button
-      style="--background: #128c7e; --border-radius: 50%; margin-left: 10px"
+      style="
+        --background: #128c7e;
+        --border-radius: 50%;
+        margin-left: 10px;
+        width:2.5rem;
+        height: fit-content;
+      "
       (click)="sendtext()"
     >
       <ion-icon name="send"></ion-icon>

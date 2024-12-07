@@ -117,6 +117,7 @@ export class HomepagePage implements AfterViewInit {
         const obj: chatdata = {
           name: ans[i].name,
           time: ans[i].time,
+          phonenumber:ans[i].phonenumber
         };
         this.data.push(obj);
       }
@@ -146,11 +147,14 @@ export class HomepagePage implements AfterViewInit {
     this.swiperRef.swiperRef.slideTo(index);
   }
 
-  async openuserchat(ev: any) {
+  async openuserchat(ev: any,receiverphonenumber:string) {
     console.log(ev);
     localStorage.setItem('mytime', ev);
     const modal = await this.modal.create({
       component: UserChatPage,
+      componentProps: {
+        receiverphonenumber:receiverphonenumber
+      },
     });
     modal.present();
   }
@@ -181,4 +185,5 @@ export class HomepagePage implements AfterViewInit {
 interface chatdata {
   name: string;
   time: string;
+  phonenumber:string;
 }

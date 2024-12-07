@@ -3,45 +3,20 @@
  "chatsdata":[
    {
     "name":"Nancy karanwal",
-    "time":"7:59 pm"
+    "time":"7:59 pm",
+    "phonenumber":"7618499850"
    },
    {
     "name":"Alok",
-    "time":"7:59 pm"
+    "time":"7:59 pm",
+    "phonenumber":"8433086615"
    },
    {
-    "name":"Tempo",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"Sohit",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"Sajid",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"Farhan",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"Akhtar",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"My Number",
-    "time":"7:59 pm"
-   },
-   {
-    "name":"yoo",
-    "time":"7:59 pm"
-    
-   },
-   {
-    "name":"Poo",
-    "time":"7:59 pm"
+    "name":"Faizan khan",
+    "time":"7:59 pm",
+    "phonenumber":"7302857877"
    }
+  
 
 
  ]

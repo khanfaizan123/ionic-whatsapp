@@ -3,14 +3,49 @@
     height: 400px;
     width: 100%;
 }
+ion-textarea {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 16px;
+ 
+
+  --border-color: none;
+  font-family: sans-serif;
+  color: #000;
+}
+
+
 ion-content::part(background){
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
     
 }
 
+
 ion-footer{
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
     
+}
+
+.go-to-bottom-btn {
+  right: 20px;
+  bottom: 5rem;
+  color: wheat;
+  border: none;
+  position: fixed;
+  border-radius: 50%;
+  background: #25D366;
+  padding: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  display: block;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+
+}
+
+.go-to-bottom-btn.show {
+  display: block; /* Display when active */
 }
 
 ion-avatar {

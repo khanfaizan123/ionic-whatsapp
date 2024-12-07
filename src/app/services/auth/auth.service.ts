@@ -41,6 +41,8 @@ appVerifier: any;
       
           const confirmationResult = await signInWithPhoneNumber(this._fireAuth, phoneNumber, this.appVerifier);
           this.confirmationResult = confirmationResult;
+          localStorage.setItem('userphonenumber',phoneNumber);
+
        
         } catch (e:any) {
           let errorMessage = 'Too many requests for OTP. Please wait for some time.';
@@ -65,20 +67,28 @@ appVerifier: any;
 }
 
 
-  async verifyOtp(otp:any) {
-    try {
-      if(!this.appVerifier) this.recaptcha();
-      const result = await this.confirmationResult.confirm(otp);
-      console.log(result);
-     
-        localStorage.setItem('currentuser',result?.user.uid);
-       console.log(result,JSON.parse(result?.user.uid));
-   
-   
-    } catch(e) {
-      throw(e);
+async verifyOtp(otp: any) {
+  try {
+    if (!this.appVerifier) {
+      this.recaptcha(); // Ensure the app verifier is set up
     }
+
+    // Confirm the OTP using the confirmation result
+    const result = await this.confirmationResult.confirm(otp);
+    console.log("yha pe result hai",result);  // Log the result to understand its structure
+
+    // Store the user UID in local storage, no need to parse UID
+    localStorage.setItem('currentuser', result.user.uid);
+
+    // Return the result as an object, no need for JSON.parse if it's already an object
+    return result;
+
+  } catch (e) {
+    console.error('Error during OTP verification:', e);
+    throw e;  // Re-throw the error so it can be handled where the method is called
   }
+}
+
 
 async  logout() {
     return await this._fireAuth.signOut();

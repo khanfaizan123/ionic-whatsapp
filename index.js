@@ -43,14 +43,29 @@ const io = new Server(server, {
   });
   
 io.on('connection', (socket) => { 
-    console.log('A user connected'); 
-    socket.on('message', (data) => {
- 
-        io.emit('received', { data: data, message: 'This is a text msg from server' });
-        // const recipientToken = data.token; // Define how to get the recipient \token
-        // console.log(recipientToken,"token h");
-        // sendPushNotification(recipientToken, data.text);
-    });
+  console.log('A user connected:', socket.id);
+
+  // Join room based on user phone number
+  socket.on('join', (phoneNumber) => {
+      console.log(`${phoneNumber} joined room: ${phoneNumber}`);
+      socket.join(phoneNumber);
+  });
+
+  // Handle incoming messages
+  socket.on('message', (data) => {
+      const { text, senderPhone, receiverPhone } = data;
+      console.log(`Message from ${senderPhone} to ${receiverPhone}: ${text}`);
+
+      // Emit the message to the receiver's room
+      io.to(receiverPhone).emit('received', {
+          data: { text, senderPhone, receiverPhone },
+          message: 'This is a message from the server',
+      });
+  });
+
+  socket.on('disconnect', () => {
+      console.log('A user disconnected:', socket.id);
+  });
 });
 
 

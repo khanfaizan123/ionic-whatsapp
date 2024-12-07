@@ -18,13 +18,16 @@ export class ChatService {
   getImageUrl(): string {
     return this.imageUrlSource.value;
   }
+  joinRoom(phoneNumber: string) {
+    this.socket.emit('join', phoneNumber);
+}
 
-  sendMessage(msg: string) {
+  sendMessage(msg: string,receiverphonenumber:string,userphonenumber:any) {
     console.log(msg);
     const uid = localStorage.getItem('currentuser');
     const token=localStorage.getItem('fcm_token');
-    console.log(uid);
-    this.socket.emit('message', { text: msg,user: uid,token:token });
+    console.log(uid,receiverphonenumber);
+    this.socket.emit('message', { text: msg,user: uid,token:token,receiverphone:receiverphonenumber,userphonenumber:userphonenumber });
     
   }
 public getMessage() {

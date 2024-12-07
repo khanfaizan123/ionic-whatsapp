@@ -50,8 +50,8 @@ export class LoginPage implements OnInit, AfterViewInit {
   arr: any[] = [];
 
   ngOnInit() {
-    this.http.get('./assets/userdatabase.json').subscribe((res: any) => {
-      this.arr = res.usernumber;
+    this.http.get('./assets/userdatabase.json').subscribe(async(res: any) => {
+      this.arr = await res.usernumber;
     });
   }
   otp: string = '';
@@ -93,30 +93,51 @@ export class LoginPage implements OnInit, AfterViewInit {
       duration: 500,
       translucent: true,
     });
-
+  
     await loading.present();
+  
     try {
       this.otp = a;
-      const response = await this.auth.verifyOtp(this.otp);
-      this.flag = true;
-
-      this.arr.find((user) => {
-        if (user.phonenumber == this.mobilenumber) {
-         
-          this.gotohomepage();
-        }
-      });
+  
+      // Verify OTP
+      const res= await this.auth.verifyOtp(this.otp);
+     if(res){
+        this.flag = true;
+  
+        // Check if mobile number exists in user list
+        for (const user of this.arr) {
+          if (user.phonenumber === this.mobilenumber) {
+             this.gotohomepage();
+            return; // Exit after navigating to the homepage
+          // }else{
+          //   const alert = await this.alertController.create({
+          //     header: 'Alert',
+          //     message: 'Phone number not found. Please register first.',
+          //     buttons: ['OK'],
+          //   });
+          //    alert.present();
+           }
+        
+  
+      
+      } 
+    }
     } catch (e) {
-    await  loading.dismiss();
+      console.error('Error verifying OTP:', e);
+      await loading.dismiss();
+  
       const alert = await this.alertController.create({
         header: 'Alert',
-        message: 'Please Enter Correct Otp',
+        message: 'Please Enter Correct OTP',
         buttons: ['OK'],
       });
-
+  
       await alert.present();
+    } finally {
+      await loading.dismiss(); // Ensure loading is dismissed
     }
   }
+  
   moveFocus(i: any, event: any) {
     const inputelement = event.target;
     let value = inputelement.value;
